@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // For TextMeshPro
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -12,16 +12,15 @@ public class GameManager : MonoBehaviour
     private int currentScore = 0;
 
     [Header("UI References")]
-    public TMP_Text scoreText;        // Assign TextMeshPro UI
-    public GameObject winPanel;       // Panel shown when all items are collected
+    public TMP_Text scoreText;
+    public GameObject winPanel;
 
     private void Awake()
     {
-        // Singleton setup
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: persists across scenes
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -35,18 +34,17 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
 
         if (winPanel != null)
-            winPanel.SetActive(false); // Hide win panel initially
+            winPanel.SetActive(false);
         else
-            Debug.LogWarning("WinPanel not assigned in Inspector!");
+            Debug.LogWarning("WinPanel not assigned!");
 
         if (scoreText == null)
-            Debug.LogWarning("ScoreText not assigned in Inspector!");
+            Debug.LogWarning("ScoreText not assigned!");
     }
 
     public void CollectItem()
     {
         currentScore++;
-
         UpdateScoreUI();
 
         if (currentScore >= totalCollectibles)
@@ -57,9 +55,8 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied(GameObject player, Transform respawnPoint)
     {
-        // Move player to respawn point instead of reloading
         player.transform.position = respawnPoint.position;
-        Debug.Log("Player died. Respawning at checkpoint.");
+        Debug.Log("Player died. Respawned.");
     }
 
     private void UpdateScoreUI()
