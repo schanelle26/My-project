@@ -1,7 +1,7 @@
+// GameManager.cs
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,17 +29,36 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void Start()
     {
         UpdateScoreUI();
 
         if (winPanel != null)
             winPanel.SetActive(false);
-        else
-            Debug.LogWarning("WinPanel not assigned!");
 
         if (scoreText == null)
-            Debug.LogWarning("ScoreText not assigned!");
+            Debug.LogWarning("ScoreText not assigned in inspector!");
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Reassign UI references after scene reload
+        scoreText = GameObject.Find("ScoreText")?.GetComponent<TMP_Text>();
+        winPanel = GameObject.Find("WinPanel");
+
+        UpdateScoreUI();
+        if (winPanel != null)
+            winPanel.SetActive(false);
     }
 
     public void CollectItem()
@@ -53,10 +72,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PlayerDied(GameObject player, Transform respawnPoint)
+    public void PlayerDied()
     {
-        player.transform.position = respawnPoint.position;
-        Debug.Log("Player died. Respawned.");
+        Debug.Log("Player hit hazard. Restarting level...");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void UpdateScoreUI()
@@ -70,7 +89,7 @@ public class GameManager : MonoBehaviour
         if (winPanel != null)
         {
             winPanel.SetActive(true);
-            Debug.Log("All collectibles found! You win!");
+            Debug.Log("You win!");
         }
     }
 }

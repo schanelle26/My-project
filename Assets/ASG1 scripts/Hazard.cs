@@ -1,6 +1,7 @@
 // Hazard.cs
 // Kills the player on contact and restarts the level
-
+// Hazard.cs - Detects collision with player and tells GameManager to respawn
+// Hazard.cs
 using UnityEngine;
 
 public class Hazard : MonoBehaviour
@@ -9,7 +10,7 @@ public class Hazard : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.instance.PlayerDied(); // Restart the level
+            GameManager.instance.PlayerDied();
         }
     }
 }
