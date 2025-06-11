@@ -1,9 +1,7 @@
-// GameManager.cs
-// Manages player score, death, and win condition UI
-
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro; // For TextMeshPro
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,32 +12,41 @@ public class GameManager : MonoBehaviour
     private int currentScore = 0;
 
     [Header("UI References")]
-    public Text scoreText;
-    public GameObject winPanel;
+    public TMP_Text scoreText;        // Assign TextMeshPro UI
+    public GameObject winPanel;       // Panel shown when all items are collected
 
     private void Awake()
     {
-        // Set up the singleton instance
+        // Singleton setup
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject); // Optional: persists across scenes
         }
         else
         {
-            Destroy(gameObject); // Prevent duplicate GameManagers
+            Destroy(gameObject);
+            return;
         }
     }
 
     private void Start()
     {
         UpdateScoreUI();
-        winPanel.SetActive(false); // Hide win message at start
+
+        if (winPanel != null)
+            winPanel.SetActive(false); // Hide win panel initially
+        else
+            Debug.LogWarning("WinPanel not assigned in Inspector!");
+
+        if (scoreText == null)
+            Debug.LogWarning("ScoreText not assigned in Inspector!");
     }
 
-    // Called when a collectible is picked up
     public void CollectItem()
     {
         currentScore++;
+
         UpdateScoreUI();
 
         if (currentScore >= totalCollectibles)
@@ -48,29 +55,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Called when the player dies (e.g., touches a hazard)
-    public void PlayerDied()
+    public void PlayerDied(GameObject player, Transform respawnPoint)
     {
-        Debug.Log("Player died. Restarting level...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Move player to respawn point instead of reloading
+        player.transform.position = respawnPoint.position;
+        Debug.Log("Player died. Respawning at checkpoint.");
     }
 
-    // Updates the on-screen score display
     private void UpdateScoreUI()
     {
-        if (scoreText != 5)
-        {
+        if (scoreText != null)
             scoreText.text = "Score: " + currentScore + "/" + totalCollectibles;
-        }
     }
 
-    // Displays the win screen when all collectibles are found
     private void ShowWinScreen()
     {
-        Debug.Log("All collectibles found! You win!");
-        if (winPanel != 5)
+        if (winPanel != null)
         {
             winPanel.SetActive(true);
+            Debug.Log("All collectibles found! You win!");
         }
     }
 }
