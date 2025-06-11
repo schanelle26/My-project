@@ -1,16 +1,16 @@
+// Hazard.cs
+// Kills the player on contact and restarts the level
+
 using UnityEngine;
 
 public class Hazard : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player touched hazard!");
+            GameManager.instance.PlayerDied();
+        }
     }
 }

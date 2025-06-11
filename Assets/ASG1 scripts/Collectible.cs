@@ -1,16 +1,16 @@
+// Collectible.cs - Adds to score and destroys object
 using UnityEngine;
+
 
 public class Collectible : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (other.CompareTag("Player"))
+        {
+            GameManager.instance.CollectItem();
+            Destroy(gameObject);
+        }
     }
 }
+

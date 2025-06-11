@@ -1,16 +1,19 @@
+// DoorTrigger.cs - Opens door when player is nearby
 using UnityEngine;
 
 public class DoorTrigger : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public Animator doorAnimator;
+
+    void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+            doorAnimator.SetBool("isOpen", true);
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerExit(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+            doorAnimator.SetBool("isOpen", false);
     }
 }
