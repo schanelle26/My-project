@@ -1,7 +1,4 @@
 // GameManager.cs
-// Handles score, collectible tracking, win message, and scene reloading
-
-// GameManager.cs
 // Handles player score, hazard deaths, UI updates, and win screen logic
 
 using UnityEngine;
