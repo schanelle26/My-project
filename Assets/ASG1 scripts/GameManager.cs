@@ -17,10 +17,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        // Singleton setup (only one GameManager exists)
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // Optional: keep across scene reload
         }
         else
         {
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
+        // Listen for scene reload
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -41,24 +43,30 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        UpdateScoreUI();
-
-        if (winPanel != null)
-            winPanel.SetActive(false);
-
-        if (scoreText == null)
-            Debug.LogWarning("ScoreText not assigned in inspector!");
+        ResetGame(); // Ensure score is 0 on first start
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Reassign UI references after scene reload
+        // Re-link UI objects after scene is reloaded
         scoreText = GameObject.Find("scoretext")?.GetComponent<TMP_Text>();
         winPanel = GameObject.Find("WinPanel");
 
+        ResetGame(); // Reset score and UI
+    }
+
+    private void ResetGame()
+    {
+        currentScore = 0;
         UpdateScoreUI();
+
         if (winPanel != null)
             winPanel.SetActive(false);
+        else
+            Debug.LogWarning("WinPanel not assigned in scene!");
+
+        if (scoreText == null)
+            Debug.LogWarning("ScoreText not found! Make sure the Text has the right name.");
     }
 
     public void CollectItem()
@@ -67,15 +75,13 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
 
         if (currentScore >= totalCollectibles)
-        {
             ShowWinScreen();
-        }
     }
 
     public void PlayerDied()
     {
-        Debug.Log("Player hit hazard. Restarting level...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("Player hit a hazard. Restarting scene...");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Full scene reload
     }
 
     private void UpdateScoreUI()
@@ -89,7 +95,7 @@ public class GameManager : MonoBehaviour
         if (winPanel != null)
         {
             winPanel.SetActive(true);
-            Debug.Log("You win!");
+            Debug.Log("All collectibles found! You win!");
         }
     }
 }

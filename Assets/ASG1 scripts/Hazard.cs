@@ -10,6 +10,7 @@ public class Hazard : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            // Tells GameManager to restart scene
             GameManager.instance.PlayerDied();
         }
     }
