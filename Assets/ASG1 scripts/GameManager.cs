@@ -1,4 +1,6 @@
 // GameManager.cs
+// Handles score, collectible tracking, win message, and scene reloading
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -17,11 +19,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton setup (only one GameManager exists)
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: keep across scene reload
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -32,7 +33,6 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        // Listen for scene reload
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -43,30 +43,29 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ResetGame(); // Ensure score is 0 on first start
+        SetupUI();
+        UpdateScoreUI();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Re-link UI objects after scene is reloaded
-        scoreText = GameObject.Find("scoretext")?.GetComponent<TMP_Text>();
-        winPanel = GameObject.Find("WinPanel");
-
-        ResetGame(); // Reset score and UI
+        // After scene reload, find the UI again
+        SetupUI();
+        UpdateScoreUI();
     }
 
-    private void ResetGame()
+    void SetupUI()
     {
-        currentScore = 0;
-        UpdateScoreUI();
+        scoreText = GameObject.Find("ScoreText")?.GetComponent<TMP_Text>();
+        winPanel = GameObject.Find("WinPanel");
+
+        if (scoreText == null)
+            Debug.LogWarning("ScoreText not assigned or found in scene!");
 
         if (winPanel != null)
             winPanel.SetActive(false);
         else
-            Debug.LogWarning("WinPanel not assigned in scene!");
-
-        if (scoreText == null)
-            Debug.LogWarning("ScoreText not found! Make sure the Text has the right name.");
+            Debug.LogWarning("WinPanel not assigned or found in scene!");
     }
 
     public void CollectItem()
@@ -75,19 +74,26 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
 
         if (currentScore >= totalCollectibles)
+        {
             ShowWinScreen();
+        }
     }
 
     public void PlayerDied()
     {
-        Debug.Log("Player hit a hazard. Restarting scene...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Full scene reload
+        Debug.Log("Player hit hazard. Restarting level...");
+
+        // Reset score to 0 on death
+        currentScore = 0;
+
+        // Reload scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void UpdateScoreUI()
     {
         if (scoreText != null)
-            scoreText.text = "Score: " + currentScore + "/" + totalCollectibles;
+            scoreText.text = $"Score: {currentScore}/{totalCollectibles}";
     }
 
     private void ShowWinScreen()
@@ -95,7 +101,7 @@ public class GameManager : MonoBehaviour
         if (winPanel != null)
         {
             winPanel.SetActive(true);
-            Debug.Log("All collectibles found! You win!");
+            Debug.Log("You win!");
         }
     }
 }

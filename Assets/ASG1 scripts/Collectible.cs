@@ -1,6 +1,7 @@
 // Collectible.cs
 // When the player touches this, it adds to the score and destroys the object
 
+// Collectible.cs - Adds to score and destroys object
 using UnityEngine;
 
 public class Collectible : MonoBehaviour
@@ -10,7 +11,7 @@ public class Collectible : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameManager.instance.CollectItem();
-            Destroy(gameObject); // Remove collectible
+            Destroy(gameObject);
         }
     }
 }
