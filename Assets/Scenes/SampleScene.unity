@@ -1917,37 +1917,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &959888766
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 959888767}
-  m_Layer: 0
-  m_Name: respawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &959888767
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 959888766}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.682991, y: 7.28241, z: -5.8691125}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &969661905
 GameObject:
   m_ObjectHideFlags: 0
@@ -9443,7 +9412,7 @@ PrefabInstance:
     - target: {fileID: 447039357094984621, guid: 26e152428175d58448609622f5e4f75d, type: 3}
       propertyPath: respawnPoint
       value: 
-      objectReference: {fileID: 959888767}
+      objectReference: {fileID: 0}
     - target: {fileID: 975281773368352393, guid: 26e152428175d58448609622f5e4f75d, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -9656,4 +9625,3 @@ SceneRoots:
   - {fileID: 1493892019}
   - {fileID: 2120712000}
   - {fileID: 1404473042}
-  - {fileID: 959888767}

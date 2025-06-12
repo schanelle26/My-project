@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Reassign UI references after scene reload
-        scoreText = GameObject.Find("ScoreText")?.GetComponent<TMP_Text>();
+        scoreText = GameObject.Find("scoretext")?.GetComponent<TMP_Text>();
         winPanel = GameObject.Find("WinPanel");
 
         UpdateScoreUI();
