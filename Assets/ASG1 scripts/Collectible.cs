@@ -32,4 +32,4 @@ public class Collectible : MonoBehaviour
             Destroy(gameObject, collectSound.length);
         }
     }
-}
+}                    

@@ -21,7 +21,7 @@ public class Hazard : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Play the hazard sound (if assigned)
+            // To play the hazard sound 
             if (hazardAudioSource != null && hazardAudioSource.clip != null)
                 hazardAudioSource.Play();
 
