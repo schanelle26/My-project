@@ -10,22 +10,28 @@ public class Hazard : MonoBehaviour
 
     private void Start()
     {
+        // Get AudioSource on the same GameObject
         hazardAudioSource = GetComponent<AudioSource>();
 
         if (hazardAudioSource == null)
-            Debug.LogWarning("No AudioSource found on the hazard object!");
+            Debug.LogWarning("No AudioSource found on this object!");
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // Play sound
+            // Play the hazard sound (if assigned)
             if (hazardAudioSource != null && hazardAudioSource.clip != null)
                 hazardAudioSource.Play();
 
-            // Tell GameManager to restart scene
-            GameManager.instance.PlayerDied();
+            // Delay restarting the scene so the sound can be heard
+            Invoke("RestartScene", 0.5f); // 0.5 seconds delay
         }
+    }
+
+    private void RestartScene()
+    {
+        GameManager.instance.PlayerDied();
     }
 }
