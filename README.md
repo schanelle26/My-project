@@ -64,6 +64,10 @@ This Unity project is a simple collectibles game where the player collects colle
 
 ## Assets and Credits
 
+- **Assets:**  
+  -Trees: https://assetstore.unity.com/packages/3d/vegetation/trees/free-trees-103208
+  
+
 - **Audio:**  
   -Collectibles, Hazards and Door: https://pixabay.com/sound-effects/search/crash/
   
