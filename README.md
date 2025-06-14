@@ -64,6 +64,10 @@ This Unity project is a simple collectibles game where the player collects colle
 
 ## Assets and Credits
 
+- **Assets:**  
+  -Trees: https://assetstore.unity.com/packages/3d/vegetation/trees/free-trees-103208
+  
+
 - **Audio:**  
   -Collectibles, Hazards and Door: https://pixabay.com/sound-effects/search/crash/
   
@@ -71,8 +75,7 @@ This Unity project is a simple collectibles game where the player collects colle
 
 - **Code:**
   Written and maintained by Schanelle with credits to Brightspace, Generative AI tools and Chatgpt
-  https://nplms.polite.edu.sg/d2l/home
-  
+  https://politemall.polite.edu.sg/catalog?pagename=Home
   https://chatgpt.com/
 ---
 
