@@ -1,18 +1,36 @@
-// DoorTrigger.cs - Opens door when player is nearby
+/*
+* Author: Schanelle Jackson
+* Date: 2025-06-13
+* Description: Controls door opening and closing based on player proximity using trigger collider.
+*/
+
 using UnityEngine;
 
+/// <summary>
+/// Controls the door behavior, opening the door and playing sound when the player enters the trigger area.
+/// </summary>
 public class DoorTrigger : MonoBehaviour
 {
-    // References to components
+    /// <summary>
+    /// Animator component controlling door animations.
+    /// </summary>
     public Animator doorAnimator;
+
+    /// <summary>
+    /// AudioSource component for playing door sounds.
+    /// </summary>
     private AudioSource doorAudioSource;
 
-    // Flags
+    /// <summary>
+    /// Flag indicating whether the door is currently open.
+    /// </summary>
     private bool isOpen = false;
 
-    void Start()
+    /// <summary>
+    /// Called before the first frame update. Initializes component references and checks for missing components.
+    /// </summary>
+    private void Start()
     {
-        // Get AudioSource on the same GameObject
         doorAudioSource = GetComponent<AudioSource>();
 
         if (doorAnimator == null)
@@ -22,7 +40,11 @@ public class DoorTrigger : MonoBehaviour
             Debug.LogWarning("No AudioSource found on this object!");
     }
 
-    // Called when player enters the trigger area
+    /// <summary>
+    /// Called when another collider enters this trigger collider.
+    /// Opens the door if the collider belongs to player.
+    /// </summary>
+    /// <param name="other">The collider that entered the trigger.</param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -31,27 +53,35 @@ public class DoorTrigger : MonoBehaviour
         }
     }
 
-    // Called when player exits the trigger area
+    /// <summary>
+    /// Called when another collider exits this trigger collider.
+    /// Closes the door if the collider belongs to the player.
+    /// </summary>
+    /// <param name="other">The collider that exited the trigger.</param>
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             isOpen = false;
-            doorAnimator.SetBool("isOpen", false);
+            if (doorAnimator != null)
+                doorAnimator.SetBool("isOpen", false);
         }
     }
 
-    // For door logic and sound
+    /// <summary>
+    /// Opens the door if it is not already open and plays the door opening sound.
+    /// </summary>
     public void Interact()
     {
         if (!isOpen)
         {
             isOpen = true;
-            doorAnimator.SetBool("isOpen", true);
 
-            // Play door sound
+            if (doorAnimator != null)
+                doorAnimator.SetBool("isOpen", true);
+
             if (doorAudioSource != null)
-                doorAudioSource.Play(); // Plays the AudioSource's assigned AudioClip
+                doorAudioSource.Play();
         }
     }
 }
