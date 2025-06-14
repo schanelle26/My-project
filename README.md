@@ -75,8 +75,7 @@ This Unity project is a simple collectibles game where the player collects colle
 
 - **Code:**
   Written and maintained by Schanelle with credits to Brightspace, Generative AI tools and Chatgpt
-  https://nplms.polite.edu.sg/d2l/home
-  
+  https://politemall.polite.edu.sg/catalog?pagename=Home
   https://chatgpt.com/
 ---
 
